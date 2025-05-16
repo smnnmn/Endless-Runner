@@ -361,6 +361,9 @@
 "Assets/Scripts/InterfaceManager.cs"
 "Assets/Scripts/Road.cs"
 "Assets/Scripts/RoadManager.cs"
+"Assets/Scripts/Runner.cs"
+"Assets/Scripts/Vehicle.cs"
+"Assets/Scripts/VehicleSpawner.cs"
 -langversion:9.0
 
 /deterministic

@@ -10,7 +10,7 @@ public class RoadManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(roads.Count);
+
     }
 
     // Update is called once per frame
