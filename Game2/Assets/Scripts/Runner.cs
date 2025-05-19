@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum RoadLine
+{
+    LEFT = -1,
+    MIDDLE,
+    RIGHT,
+}
+
 public class Runner : MonoBehaviour
 {
-    public enum RoadLine
-    {
-        LEFT = -1,
-        MIDDLE,
-        RIGHT,
-    }
-    [SerializeField] RoadLine roadLine;
 
+    [SerializeField] RoadLine roadLine;
     Rigidbody rigidBody;
+    
+    [SerializeField] float positionX = 4;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +27,7 @@ public class Runner : MonoBehaviour
     void Update()
     {
         Keyboard();
-        OnMove();
+        Move();
         Debug.Log(roadLine);
     }
     void Keyboard()
@@ -39,8 +42,8 @@ public class Runner : MonoBehaviour
         }
         roadLine = (RoadLine)Mathf.Clamp((int)roadLine, -1, 1);
     }
-    void OnMove()
+    void Move()
     {
-        rigidBody.position = new Vector3(4 * (int)roadLine, 0, 0);
+        rigidBody.position = new Vector3(positionX * (int)roadLine, 0, 0);
     }
 }

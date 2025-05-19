@@ -5,24 +5,29 @@ using UnityEngine;
 public class VehicleSpawner : MonoBehaviour
 {
     [SerializeField] GameObject prefab;
-    [SerializeField] Transform[] InsPosition;
+    [SerializeField] GameObject[] InsPosition;
+
+    private int index;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(InsVehicle());
     }
-    Transform SetPosition()
+    Vector3 SetPosition()
     {
-        return InsPosition[Random.Range(0, InsPosition.Length)];
+        index = Random.Range(0, InsPosition.Length);
+        return InsPosition[index].transform.position;
     }
     IEnumerator InsVehicle()
     {
         while(true)
         {
             // Instantiate(prefab, transform.position, transform.rotation);
-            Instantiate(prefab, SetPosition());
-            Debug.Log("»ý¼º");
-            yield return new WaitForSeconds(Random.Range(2, 6));
+            GameObject gameObject = Instantiate(prefab, SetPosition(), Quaternion.Euler(0,180,0));
+            gameObject.GetComponent<Vehicle>().roadIndex = index;
+            Debug.Log(index);
+            yield return new WaitForSeconds(3f);
+            // yield return new WaitForSeconds(Random.Range(0.5f, 0.75f));
         }
     
     }

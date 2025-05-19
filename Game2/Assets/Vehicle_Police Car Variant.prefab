@@ -83,7 +83,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baacfeeb9359dc47a8687880627335e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 50
+  roadIndex: 0
+  prefab:
+  - {fileID: 4697185932481594613, guid: 8c070f212748b4c44b4791c34ac94748, type: 3}
+  - {fileID: 8084980340290511938, guid: 3af2cfb410d5fc64b987a9eb96f7d7c4, type: 3}
+  - {fileID: 2845789811388066631, guid: bd50df36c22ee7747a03eaf9ecff4579, type: 3}
 --- !u!64 &8208709086300174366
 MeshCollider:
   m_ObjectHideFlags: 0
