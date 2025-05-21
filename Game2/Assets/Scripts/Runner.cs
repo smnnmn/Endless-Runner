@@ -28,7 +28,6 @@ public class Runner : MonoBehaviour
     {
         Keyboard();
         Move();
-        Debug.Log(roadLine);
     }
     void Keyboard()
     {

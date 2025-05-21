@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vehicle : MonoBehaviour
+public class Vehicle : MonoBehaviour, Collidable
 {
     [SerializeField] float speed;
     public int roadIndex;
@@ -22,7 +22,7 @@ public class Vehicle : MonoBehaviour
         {
             prefabs[i] = vehicleSpanwer.InsPosition[i];
         }
-        int reRoad = Random.Range(0, 2);
+        int reRoad = Random.Range(1, 2);
         if(reRoad >= 1)
         {
             StartCoroutine(ReMove());
@@ -35,9 +35,18 @@ public class Vehicle : MonoBehaviour
     }
     IEnumerator ReMove()
     {
-        yield return new WaitForSeconds(Random.Range(1f, 3f));
+        yield return new WaitForSeconds(Random.Range(2.5f, 2.75f));
 
-        end = prefabs[(roadIndex + Random.Range(1, 3)) % 2].transform.localPosition.x;
+        int random = Random.Range(1, 3);
+        Debug.Log(roadIndex + " " + (roadIndex + random) % 3);
+        end = prefabs[(roadIndex + random) % 3].transform.localPosition.x;
+
+        // roadIndex = 0, 1, 2
+        // 1, 2를 더하고 % 3를 하면
+        // 0은 1 ,2 최종적으로 1, 2
+        // 1은 2, 3 최종적으로 2, 0
+        // 2는 3, 4 최종적으로 0, 1
+
 
         // Vector3 endVec = new Vector3(end, transform.position.y, transform.position.z);
 
@@ -50,5 +59,9 @@ public class Vehicle : MonoBehaviour
         }
         Debug.Log("끝");
 
+    }
+    public void Activate()
+    {
+        Destroy(gameObject);
     }
 }
