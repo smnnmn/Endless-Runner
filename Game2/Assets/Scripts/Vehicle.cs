@@ -38,7 +38,6 @@ public class Vehicle : MonoBehaviour, Collidable
         yield return new WaitForSeconds(Random.Range(2.5f, 2.75f));
 
         int random = Random.Range(1, 3);
-        Debug.Log(roadIndex + " " + (roadIndex + random) % 3);
         end = prefabs[(roadIndex + random) % 3].transform.localPosition.x;
 
         // roadIndex = 0, 1, 2

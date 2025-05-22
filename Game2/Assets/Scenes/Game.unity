@@ -815,7 +815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61c13f95140131e46909aeaaff416539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texture2D: {fileID: 2800000, guid: e43eb6dc9e9ce1f47bac91c53a5246fc, type: 3}
+  texture2D: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,6 +1847,10 @@ MonoBehaviour:
   - {fileID: 1112816280}
   - {fileID: 902129553}
   - {fileID: 763075165}
+  prefabsName:
+  - Barrier
+  - TrafficCone
+  - OilDrum
 --- !u!4 &2083311795
 Transform:
   m_ObjectHideFlags: 0
