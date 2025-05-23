@@ -13,7 +13,7 @@ public class ObstacleManager : MonoBehaviour
 
     [SerializeField] Transform[] transforms;
 
-
+    [SerializeField] WaitForSeconds waitForSeconds = new WaitForSeconds(0.6f);
     private void Start()
     {
         obstacles.Capacity = 10;
@@ -84,7 +84,7 @@ public class ObstacleManager : MonoBehaviour
                 VehicleSpawner vehicleSpawner = FindObjectOfType<VehicleSpawner>();
                 vehicleSpawner.InsVehicle();
             }
-            yield return new WaitForSeconds(Random.Range(0.5f ,0.75f));
+            yield return waitForSeconds;
 
         }
 
