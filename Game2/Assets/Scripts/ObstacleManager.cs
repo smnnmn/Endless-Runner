@@ -84,7 +84,7 @@ public class ObstacleManager : MonoBehaviour
                 VehicleSpawner vehicleSpawner = FindObjectOfType<VehicleSpawner>();
                 vehicleSpawner.InsVehicle();
             }
-            yield return waitForSeconds;
+            yield return CoroutineCache.WaitForSecond(0.5f);
 
         }
 
