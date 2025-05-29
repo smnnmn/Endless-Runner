@@ -2,26 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedManager : MonoBehaviour
+public class SpeedManager : Singleton<SpeedManager>
 {
     [SerializeField] float speed = 30.0f;
+    [SerializeField] float limitSpeed = 60.0f;
 
     public float Speed { get { return speed; } }
-    private static SpeedManager instance;
-    public static SpeedManager Instance
+
+    private void Start()
     {
-        get { return instance; }
+        StartCoroutine(Increase());
     }
-    private void Awake()
+    IEnumerator Increase()
     {
-        if(instance == null)
+        while(speed < limitSpeed)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
+            yield return new WaitForSeconds(5f);
+            speed += 2.5f;
         }
     }
 }
