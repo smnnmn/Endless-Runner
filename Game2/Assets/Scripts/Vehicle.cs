@@ -16,6 +16,14 @@ public class Vehicle : MonoBehaviour, Collidable
     {
         vehicleSpanwer = FindObjectOfType<VehicleSpawner>();
     }
+    private void OnEnable()
+    {
+        
+    }
+    void Execute()
+    {
+
+    }
     private void Start()
     {
         for(int i = 0; i < 3; i++)

@@ -7,17 +7,29 @@ public class RoadManager : MonoBehaviour
     [SerializeField] List<GameObject> roads = new List<GameObject>();
     private float offset = 40.0f;
     // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-
+        State.Subscribe(Condition.START, Execute);
+    }
+    void Execute()
+    {
+        StartCoroutine(Coroutine());
     }
 
     // Update is called once per frame
     void Update()
     {
-        for(int i = 0; i < roads.Count; i++)
+
+    }
+    IEnumerator Coroutine()
+    {
+        while(true)
         {
-            roads[i].transform.Translate(SpeedManager.Instance.Speed * Vector3.back * Time.deltaTime);
+            for (int i = 0; i < roads.Count; i++)
+            {
+                roads[i].transform.Translate(SpeedManager.Instance.Speed * Vector3.back * Time.deltaTime);
+            }
+            yield return null;
         }
     }
     public void InitalizePosition()
@@ -27,5 +39,9 @@ public class RoadManager : MonoBehaviour
         float newZ = roads[roads.Count - 1].transform.position.z + offset;
         newRoad.transform.position = new Vector3(0, 0, newZ);
         roads.Add(newRoad);
+    }
+    private void OnDisable()
+    {
+        State.Unsubscribe(Condition.START, Execute);
     }
 }
