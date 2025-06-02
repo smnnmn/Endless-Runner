@@ -15,13 +15,18 @@ public class MouseManager : MonoBehaviour
     {
         Cursor.SetCursor(texture2D, Vector2.zero, CursorMode.ForceSoftware);
     }
+    private void OnEnable()
+    {
+        State.Subscribe(Condition.FINISH, EnableMode);
+        State.Subscribe(Condition.START, DisableMode);
+    }
 
-    void EnableMouse()
+    void EnableMode()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
-    void DisableMouse()
+    void DisableMode()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -30,5 +35,10 @@ public class MouseManager : MonoBehaviour
     void Update()
     {
 
+    }
+    private void OnDisable()
+    {
+        State.Unsubscribe(Condition.START, DisableMode);
+        State.Unsubscribe(Condition.FINISH, EnableMode);
     }
 }

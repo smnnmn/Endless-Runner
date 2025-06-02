@@ -14,13 +14,22 @@ public class ObstacleManager : MonoBehaviour
     [SerializeField] Transform[] transforms;
 
     [SerializeField] WaitForSeconds waitForSeconds = new WaitForSeconds(0.6f);
-    private void Start()
+
+    private void OnEnable()
+    {
+        State.Subscribe(Condition.START, Execute);
+    }
+    void Execute()
     {
         obstacles.Capacity = 10;
 
         Create();
 
         StartCoroutine(ActiveObstacle());
+    }
+    private void Start()
+    {
+
     }
     void Create()
     {
@@ -88,5 +97,9 @@ public class ObstacleManager : MonoBehaviour
 
         }
 
+    }
+    private void OnDisable()
+    {
+        State.Unsubscribe(Condition.START, Execute);
     }
 }

@@ -5,49 +5,107 @@ using UnityEngine;
 public enum RoadLine
 {
     LEFT = -1,
-    MIDDLE,
-    RIGHT,
+    MIDDLE = 0,
+    RIGHT = 1
 }
 
 public class Runner : MonoBehaviour
 {
-
     [SerializeField] RoadLine roadLine;
-    Rigidbody rigidBody;
-    
+    [SerializeField] Rigidbody rigidBody;
+
+    [SerializeField] Animator animator;
     [SerializeField] float positionX = 4;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
+        animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody>();
-        roadLine = RoadLine.MIDDLE;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        Keyboard();
+        State.Subscribe(Condition.FINISH, Die);
+
+        State.Subscribe(Condition.START, InputSystem);
+        State.Subscribe(Condition.START, StateTransition);
+    }
+
+    public void InputSystem()
+    {
+        StartCoroutine(Coroutine());
+    }
+
+    private void FixedUpdate()
+    {
         Move();
     }
-    void Keyboard()
+    private void OnTriggerEnter(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        Obstacle obstacle = other.GetComponent<Obstacle>();
+        Vehicle vehicle = other.GetComponent<Vehicle>();
+
+        if(obstacle != null)
         {
-            roadLine--;
+            State.Publish(Condition.FINISH);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if(vehicle != null)
         {
-            roadLine++;
+            State.Publish(Condition.FINISH);
         }
-        roadLine = (RoadLine)Mathf.Clamp((int)roadLine, -1, 1);
     }
+    void Die()
+    {
+        animator.Play("Die");
+    }
+    IEnumerator Coroutine()
+    {
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                if (roadLine != RoadLine.LEFT)
+                {
+                    roadLine--;
+
+                    animator.Play("Left Avoid");
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (roadLine != RoadLine.RIGHT)
+                {
+                    roadLine++;
+
+                    animator.Play("Right Avoid");
+                }
+            }
+
+            yield return null;
+        }
+    }
+
     void Move()
     {
         rigidBody.position = Vector3.Lerp
-            (
+        (
             rigidBody.position,
             new Vector3(positionX * (int)roadLine, 0, 0),
             SpeedManager.Instance.Speed * Time.deltaTime
-            );
+        );
+    }
+
+    public void StateTransition()
+    {
+        animator.SetTrigger("Start");
+    }
+
+    private void OnDisable()
+    {
+        State.Unsubscribe(Condition.FINISH, Die);
+
+        State.Unsubscribe(Condition.START, InputSystem);
+        State.Unsubscribe(Condition.START, StateTransition);
     }
 }
