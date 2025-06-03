@@ -26,6 +26,7 @@ public class Runner : MonoBehaviour
     private void OnEnable()
     {
         State.Subscribe(Condition.FINISH, Die);
+        State.Subscribe(Condition.FINISH, Release);
 
         State.Subscribe(Condition.START, InputSystem);
         State.Subscribe(Condition.START, StateTransition);
@@ -35,7 +36,10 @@ public class Runner : MonoBehaviour
     {
         StartCoroutine(Coroutine());
     }
-
+    void Release()
+    {
+        StopAllCoroutines();
+    }
     private void FixedUpdate()
     {
         Move();
@@ -100,10 +104,15 @@ public class Runner : MonoBehaviour
     {
         animator.SetTrigger("Start");
     }
-
+    public void Synchronize()
+    {
+        animator.speed = SpeedManager.Instance.Speed / SpeedManager.Instance.InitializeSpeed;
+    }
     private void OnDisable()
     {
         State.Unsubscribe(Condition.FINISH, Die);
+        State.Unsubscribe(Condition.FINISH, Release);
+
 
         State.Unsubscribe(Condition.START, InputSystem);
         State.Unsubscribe(Condition.START, StateTransition);

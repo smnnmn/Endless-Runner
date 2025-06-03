@@ -18,11 +18,11 @@ public class Vehicle : MonoBehaviour, Collidable
     }
     private void OnEnable()
     {
-        
+        State.Subscribe(Condition.FINISH, Release);
     }
-    void Execute()
+    void Release()
     {
-
+        StopAllCoroutines();
     }
     private void Start()
     {
@@ -70,5 +70,10 @@ public class Vehicle : MonoBehaviour, Collidable
     public void Activate()
     {
         Destroy(gameObject);
+    }
+    void OnDisable()
+    {
+        State.Unsubscribe(Condition.FINISH, Release);
+
     }
 }

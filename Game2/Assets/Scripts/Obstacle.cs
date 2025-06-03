@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour , Collidable
 {
-
+    void OnEnable()
+    {
+        State.Subscribe(Condition.FINISH, Release);
+    }
+    void Release()
+    {
+        Destroy(this);
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -15,5 +22,8 @@ public class Obstacle : MonoBehaviour , Collidable
     {
         gameObject.SetActive(false);
     }
-
+    private void OnDisable()
+    {
+        State.Unsubscribe(Condition.FINISH, Release);
+    }
 }
