@@ -61,6 +61,7 @@ public class Runner : MonoBehaviour
     void Die()
     {
         animator.Play("Die");
+        AudioManager.Instance.Listener("Conflict");
     }
     IEnumerator Coroutine()
     {
