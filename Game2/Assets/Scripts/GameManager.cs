@@ -5,17 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject startButton;
-
-    private void OnEnable()
-    {
-        State.Subscribe(Condition.START, DisableButton);
-    }
-    public void DisableButton()
-    {
-        startButton.SetActive(false);
-    }
-
     public void Execute()
     {
         State.Publish(Condition.START);
@@ -24,11 +13,6 @@ public class GameManager : MonoBehaviour
     }
     public void  Resume()
     {
-        Debug.Log("Resume");
-    }
-
-    public void OnDisable()
-    {
-        State.Unsubscribe(Condition.START, DisableButton);
+        State.Publish(Condition.RESUME);
     }
 }
